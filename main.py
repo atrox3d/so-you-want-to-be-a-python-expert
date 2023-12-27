@@ -6,7 +6,7 @@ from helpers.logger import get_main_logger
 
 logger = get_main_logger(
                 __name__, 
-                level='DEBUG', 
+                level='INFO', 
                 module_width=10,
                 date_format=helpers.logger.TIME
     )
