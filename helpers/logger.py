@@ -1,6 +1,9 @@
 import logging
 import sys
 
+DATE = '%Y/%m/%d'
+TIME = '%H:%M:%S'
+DATE_AND_TIME = f'{DATE} {TIME}'
 
 def get_main_logger(
         name, 
@@ -9,7 +12,7 @@ def get_main_logger(
         function_width=12, 
         level_width=len("CRITICAL"),
         line_format=None,
-        date_format=None
+        date_format=DATE_AND_TIME
         ):
     """
     get standard logger to stdout, level INFO
@@ -25,7 +28,6 @@ def get_main_logger(
             f"%(levelname)-{level_width}s | "
             f"%(message)s"
     )
-    date_format = date_format or '%Y/%m/%d %H:%M:%S'
 
     logging.basicConfig(
         level=level,
