@@ -25,7 +25,7 @@ def main(*args, **kwargs):
 
 if  __name__ == '__main__':
 
-    logging.basicConfig(level=logging.DEBUG)
+    logging.basicConfig(level='DEBUG')
     args, kwargs = get_args()
     logger.debug(f'{args = }')
     logger.debug(f'{kwargs = }')
