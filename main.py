@@ -1,6 +1,6 @@
 import sys
-from arguments import parse_args, get_args
-from logger import get_logger
+from helpers.arguments import parse_args, get_args
+from helpers.logger import get_logger
 
 logger = get_logger(__name__, level='DEBUG', module_width=10)
 
