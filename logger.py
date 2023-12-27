@@ -4,10 +4,10 @@ import sys
 
 def get_logger(
         name, 
-        levelname='INFO', 
-        modulename_width=12, 
-        funcname_width=12, 
-        levelname_width=len("CRITICAL"),
+        level='INFO', 
+        module_width=12, 
+        function_width=12, 
+        level_width=len("CRITICAL"),
         line_format=None,
         date_format=None
         ):
@@ -20,15 +20,15 @@ def get_logger(
 
     line_format = line_format or (
             f"%(asctime)s | "
-            f"%(module){modulename_width}s.py | "
-            f"%(funcName){funcname_width}s() | "
-            f"%(levelname)-{levelname_width}s | "
+            f"%(module){module_width}s.py | "
+            f"%(funcName){function_width}s() | "
+            f"%(levelname)-{level_width}s | "
             f"%(message)s"
     )
     date_format = date_format or '%Y/%m/%d %H:%M:%S'
 
     logging.basicConfig(
-        level=levelname,
+        level=level,
         format=line_format,
         datefmt=date_format,
         # stream=sys.stdout
