@@ -2,4 +2,4 @@
 
 
 reference:
-https://github.com/atrox3d/so-you-want-to-be-a-python-expert.git
+https://youtu.be/cKPlPJyQrt4?si=FWLPw3wyBH3ZBRtt
