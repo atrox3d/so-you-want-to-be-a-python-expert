@@ -1,8 +1,8 @@
 import sys
 from helpers.arguments import parse_args, get_args
-from helpers.logger import get_logger
+from helpers.logger import get_main_logger
 
-logger = get_logger(__name__, level='DEBUG', module_width=10)
+logger = get_main_logger(__name__, level='DEBUG', module_width=10)
 
 
 def main(*args, **kwargs):

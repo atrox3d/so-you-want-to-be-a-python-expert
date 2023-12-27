@@ -2,7 +2,7 @@ import logging
 import sys
 
 
-def get_logger(
+def get_main_logger(
         name, 
         level='INFO', 
         module_width=12, 
