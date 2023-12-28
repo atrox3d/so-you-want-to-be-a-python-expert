@@ -2,7 +2,7 @@ from sqlite3 import connect
 from contextlib import closing
 import logging
 
-from .ctx import TempTable
+from .ctx import ctx
 
 logger = logging.getLogger(__name__)
 
@@ -16,7 +16,7 @@ def demo():
             createsql='CREATE TABLE points (x int, y, int)'
             dropsql='DROP TABLE points'
             # creates and drops the table
-            with TempTable( cur, createsql, dropsql):
+            with ctx( cur, createsql, dropsql):
                 logger.info('INSERT INTO points (x, y) VALUES(*, *)')
                 cur.execute('INSERT INTO points (x, y) VALUES(1, 2)')
                 cur.execute('INSERT INTO points (x, y) VALUES(2, 3)')
