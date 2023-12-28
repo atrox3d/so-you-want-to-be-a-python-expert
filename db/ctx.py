@@ -12,7 +12,7 @@ logger = logging.getLogger(__name__)
 #     x.__exit__()
 
 class TempTable:
-    def __init__(self, cur, createsql, dropsql):
+    def __init__(self, cur, createsql: str, dropsql: str):
         logger.info(f'{cur = }')
         logger.info(f'{createsql = }')
         logger.info(f'{dropsql = }')

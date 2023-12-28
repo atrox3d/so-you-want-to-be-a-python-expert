@@ -9,7 +9,7 @@ logger = logging.getLogger(__name__)
 def demo():
     with connect('test.db') as conn:
         cur = conn.cursor()
-        createsql='CREATE TABLE points (x int, y, int)', 
+        createsql='CREATE TABLE points (x int, y, int)'
         dropsql='DROP TABLE points'
 
         with TempTable( cur, createsql, dropsql):
