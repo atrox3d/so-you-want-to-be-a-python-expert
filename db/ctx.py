@@ -1,4 +1,5 @@
 import logging
+from typing import Any
 
 logger = logging.getLogger(__name__)
 
@@ -21,17 +22,26 @@ def temptable(cur, createsql: str, dropsql: str):
 
 
 class ctx:
-    def __init__(self, cur, createsql: str, dropsql: str):
-        logger.info(f'{cur = }')
-        logger.info(f'{createsql = }')
-        logger.info(f'{dropsql = }')
-        self.cur = cur
-        self.createsql = createsql
-        self.dropsql = dropsql
+    def __init__(self, gen):
+        logger.info(f'{gen = }')
+        self.gen = gen
+    
+    def __call__(self, *args: Any, **kwargs: Any) -> Any:
+        logger.info(f'{args = }')
+        logger.info(f'{kwargs = }')
+        self.args, self.kwargs = args, kwargs
+        return self
 
     def __enter__(self):
-        self.gen = temptable(self.cur, self.createsql, self.dropsql)
+        logger.info(f'{self.args = }')
+        logger.info(f'{self.kwargs = }')
+        self.gen = self.gen(*self.args, **self.kwargs)
+
+        logger.info('    NEXT')
         next(self.gen)
+        logger.info('    END NEXT')
 
     def __exit__(self, *args):
+        logger.info('    NEXT')
         next(self.gen, None)
+        logger.info('    END NEXT')
