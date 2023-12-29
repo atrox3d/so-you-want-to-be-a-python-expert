@@ -21,15 +21,15 @@ def temptable(cur, createsql: str, dropsql: str):
     cur.execute(dropsql)
 
 
-class ctx:
+class ContextManager:
     def __init__(self, gen):
         logger.info(f'{gen = }')
         self.gen = gen
     
-    def __call__(self, *args: Any, **kwargs: Any) -> Any:
-        logger.info(f'{args = }')
-        logger.info(f'{kwargs = }')
-        self.args, self.kwargs = args, kwargs
+    def __call__(self, *gen_args: Any, **gen_kwargs: Any) -> Any:
+        logger.info(f'{gen_args = }')
+        logger.info(f'{gen_kwargs = }')
+        self.args, self.kwargs = gen_args, gen_kwargs
         return self
 
     def __enter__(self):
