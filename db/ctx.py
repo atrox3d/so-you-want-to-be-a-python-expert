@@ -12,15 +12,6 @@ logger = logging.getLogger(__name__)
 # finally:
 #     x.__exit__()
 
-
-def temptable(cur, createsql: str, dropsql: str):
-    logger.info(createsql)
-    cur.execute(createsql)
-    yield
-    logger.info(dropsql)
-    cur.execute(dropsql)
-
-
 class ContextManager:
     def __init__(self, gen):
         logger.info(f'{gen = }')
@@ -45,3 +36,12 @@ class ContextManager:
         logger.info('    NEXT')
         next(self.gen, None)
         logger.info('    END NEXT')
+
+def temptable(cur, createsql: str, dropsql: str):
+    logger.info(createsql)
+    cur.execute(createsql)
+    yield
+    logger.info(dropsql)
+    cur.execute(dropsql)
+
+temptable = ContextManager(temptable)

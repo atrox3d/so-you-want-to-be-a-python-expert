@@ -17,7 +17,7 @@ def demo():
             dropsql='DROP TABLE points'
             # creates and drops the table
             logger.info('WITH CTX')
-            with ContextManager(temptable)(cur, createsql, dropsql):
+            with temptable(cur, createsql, dropsql):
                 logger.info('  WITH BLOCK')
                 logger.info('INSERT INTO points (x, y) VALUES(*, *)')
                 cur.execute('INSERT INTO points (x, y) VALUES(1, 2)')
