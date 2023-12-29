@@ -21,10 +21,9 @@ def temptable(cur: Cursor, createsql: str, dropsql: str):
     logger.info(f'    SQL: {createsql}')
     cur.execute(createsql)
     logger.info('  END NEXT')
-
-    logger.info('  YIELD')
-
     try:
+        logger.info('  YIELD')
+        # will raise any exception after the finally
         yield
     finally:
         logger.info('  NEXT')
