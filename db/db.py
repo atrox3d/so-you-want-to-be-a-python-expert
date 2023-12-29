@@ -19,9 +19,15 @@ def demo():
             dropsql='DROP TABLE points'
             logger.info('WITH CTX')
             # creates and drops the table
+            # 1) __init__()__call__() version
             # with ContextManager(temptable)(cur, createsql, dropsql):
-            c = ContextManager(temptable)       # -> __init__
-            with c(cur, createsql, dropsql):    # -> __call__
+            #
+            # 2) __init__() and __call__() version
+            # c = ContextManager(temptable)       # -> __init__
+            # with c(cur, createsql, dropsql):    # -> __call__
+            #
+            # 3) only __init__ version
+            with ContextManager(gen=temptable, cur=cur, createsql=createsql, dropsql=dropsql):
                 logger.info('  WITH BLOCK')
                 logger.info('INSERT INTO points (x, y) VALUES(*, *)')
                 cur.execute('INSERT INTO points (x, y) VALUES(1, 2)')

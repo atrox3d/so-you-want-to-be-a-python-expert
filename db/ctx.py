@@ -28,14 +28,20 @@ class ContextManager:
     '''
     context manager
     '''
-    def __init__(self, gen):
+    def __init__(self, gen, *gen_args: Any, **gen_kwargs: Any):
         logger.info(f'{gen = }')
+        logger.info(f'{gen_args = }')
+        logger.info(f'{gen_kwargs = }')
+        self.args, self.kwargs = gen_args, gen_kwargs
         self.gen = gen
     
-    def __call__(self, *args: Any, **kwargs: Any) -> Any:
-        logger.info(f'{args = }')
-        logger.info(f'{kwargs = }')
-        self.args, self.kwargs = args, kwargs
+    def __call__(self, *gen_args: Any, **gen_kwargs: Any) -> Any:
+        '''
+        not used if we pass parameters to __init__
+        '''
+        logger.info(f'{gen_args = }')
+        logger.info(f'{gen_kwargs = }')
+        self.args, self.kwargs = gen_args, gen_kwargs
         return self
 
     def __enter__(self):
