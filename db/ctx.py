@@ -1,6 +1,7 @@
 import logging
 from typing import Any
 from contextlib import contextmanager
+from sqlite3 import Cursor
 
 logger = logging.getLogger(__name__)
 
@@ -13,19 +14,27 @@ logger = logging.getLogger(__name__)
 # finally:
 #     x.__exit__()
 
-
+# same as class ContextManager
 @contextmanager
-def temptable(cur, createsql: str, dropsql: str):
-    logger.info(createsql)
+def temptable(cur: Cursor, createsql: str, dropsql: str):
+    logger.info('  NEXT')
+    logger.info(f'    SQL: {createsql}')
     cur.execute(createsql)
-    yield
-    logger.info(dropsql)
-    cur.execute(dropsql)
+    logger.info('  END NEXT')
 
-# temptable = ContextManager(temptable)
+    logger.info('  YIELD')
 
+    try:
+        yield
+    finally:
+        logger.info('  NEXT')
+        logger.info(f'    SQL: {dropsql}')
+        cur.execute(dropsql)
+        logger.info('  END NEXT')
+
+# same as @contextmanager
 class ContextManager:
-    def __init__(self, gen):
+    def __init__(self, gen: callable):
         logger.info(f'{gen = }')
         self.gen = gen
     
@@ -36,8 +45,7 @@ class ContextManager:
         return self
 
     def __enter__(self):
-        logger.info(f'{self.args = }')
-        logger.info(f'{self.kwargs = }')
+        logger.info(f'calling gen({self.args, self.kwargs})')
         self.gen = self.gen(*self.args, **self.kwargs)
 
         logger.info('    NEXT')
@@ -49,3 +57,5 @@ class ContextManager:
         next(self.gen, None)
         logger.info('    END NEXT')
 
+# same as @contextmanager
+# temptable = ContextManager(temptable)
