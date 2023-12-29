@@ -37,6 +37,7 @@ class ContextManager:
         next(self.gen, None)
         logger.info('    END NEXT')
 
+@ContextManager
 def temptable(cur, createsql: str, dropsql: str):
     logger.info(createsql)
     cur.execute(createsql)
@@ -44,4 +45,4 @@ def temptable(cur, createsql: str, dropsql: str):
     logger.info(dropsql)
     cur.execute(dropsql)
 
-temptable = ContextManager(temptable)
+# temptable = ContextManager(temptable)
