@@ -2,24 +2,26 @@ from sqlite3 import connect
 from contextlib import closing
 import logging
 
-from .ctx import ctx, temptable
+from .ctx import ContextManager, temptable
 
 logger = logging.getLogger(__name__)
 
 
 def demo():
     # closes the connection
+    # using with connect() DOES NOT close the connection,
+    # it just commits the changes
     with closing(connect('test.db')) as conn:
         # commits changes
         with conn:
             cur = conn.cursor()
             createsql='CREATE TABLE points (x int, y, int)'
             dropsql='DROP TABLE points'
-            # creates and drops the table
             logger.info('WITH CTX')
-            # with ctx(temptable)(cur, createsql, dropsql):
-            c = ctx(temptable)
-            with c(cur, createsql, dropsql):
+            # creates and drops the table
+            # with ContextManager(temptable)(cur, createsql, dropsql):
+            c = ContextManager(temptable)       # -> __init__
+            with c(cur, createsql, dropsql):    # -> __call__
                 logger.info('  WITH BLOCK')
                 logger.info('INSERT INTO points (x, y) VALUES(*, *)')
                 cur.execute('INSERT INTO points (x, y) VALUES(1, 2)')

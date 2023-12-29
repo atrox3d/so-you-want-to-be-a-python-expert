@@ -14,6 +14,9 @@ logger = logging.getLogger(__name__)
 
 
 def temptable(cur, createsql: str, dropsql: str):
+    '''
+    generator: creates table, return control, closes table
+    '''
     logger.info(createsql)
     cur.execute(createsql)
     yield
@@ -21,7 +24,10 @@ def temptable(cur, createsql: str, dropsql: str):
     cur.execute(dropsql)
 
 
-class ctx:
+class ContextManager:
+    '''
+    context manager
+    '''
     def __init__(self, gen):
         logger.info(f'{gen = }')
         self.gen = gen
