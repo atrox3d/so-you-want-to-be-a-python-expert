@@ -1,5 +1,6 @@
 import logging
 from typing import Any
+from contextlib import contextmanager
 
 logger = logging.getLogger(__name__)
 
@@ -11,6 +12,17 @@ logger = logging.getLogger(__name__)
 #     pass
 # finally:
 #     x.__exit__()
+
+
+@contextmanager
+def temptable(cur, createsql: str, dropsql: str):
+    logger.info(createsql)
+    cur.execute(createsql)
+    yield
+    logger.info(dropsql)
+    cur.execute(dropsql)
+
+# temptable = ContextManager(temptable)
 
 class ContextManager:
     def __init__(self, gen):
@@ -37,12 +49,3 @@ class ContextManager:
         next(self.gen, None)
         logger.info('    END NEXT')
 
-@ContextManager
-def temptable(cur, createsql: str, dropsql: str):
-    logger.info(createsql)
-    cur.execute(createsql)
-    yield
-    logger.info(dropsql)
-    cur.execute(dropsql)
-
-# temptable = ContextManager(temptable)
